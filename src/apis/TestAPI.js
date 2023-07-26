@@ -1,1 +1,7 @@
-import httpInstance from "@/utils/http"
+import httpInstace from '@/utils/http'
+
+export function getCategoryAPI () {
+  return httpInstace({
+    url: 'home/category/head'
+  })
+}
