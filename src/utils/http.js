@@ -4,7 +4,6 @@ const httpInstance = axios.create({
     baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
     timeout: 5000
 })
-
 // 添加请求拦截器
 httpInstance.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
