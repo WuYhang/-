@@ -1,13 +1,12 @@
-import './assets/main.css'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import { getCategoryAPI } from "@/apis/TestAPI"
 
 import App from './App.vue'
-import router from 'router'
+import router from './router'
 
-import { createApp } from 'vue'
-//导入pinia
-import { createPinia } from 'pinia'
+import '@/styles/common.scss'
 
-import { getCategoryAPI } from "@/apis/TestAPI"
 getCategoryAPI().then(res => {
     console.log(res);
 })
