@@ -22,7 +22,6 @@ const reqData = ref({
 })
 const getGoodList = async () => {
     const res = await getSubCategoryAPI(reqData.value)
-    console.log(res);
     goodList.value = res.data.result.items
 }
 getGoodList()
@@ -34,7 +33,6 @@ const tabChange = () => {
 //加载更多数据
 const disabled = ref(false)
 const load = async () => {
-    console.log('11')
     //下一页数据
     reqData.value.page++
     const res = await getSubCategoryAPI(reqData.value)

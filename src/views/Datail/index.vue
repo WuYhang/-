@@ -1,9 +1,12 @@
 <script setup>
 import DetailHot from "./components/DetailHot.vue"
 import imageView from "@/components/imageView/index.vue"
+import XtxSku from "@/components/XtxSku/index.vue"
 import { getDetail } from "@/apis/detail"
 import { ref, onMounted } from "vue"
 import { useRoute } from "vue-router";
+import { useCategoryStore } from "@/stores/cartStore"
+const cartStore = useCategoryStore()
 
 const goods = ref({})
 const route = useRoute()
@@ -12,6 +15,34 @@ const getGoods = async () => {
     goods.value = res.data.result
 }
 onMounted(() => getGoods())
+// sku被操作时
+let SkuObj = {}
+const skuChange = ((sku) => {
+    console.log(sku);
+    SkuObj = sku
+})
+//购物车数量
+const count = ref(1)
+const countChange = () => {
+    console.log(count.value);
+}
+//添加购物车
+const addCart = () => {
+    if (SkuObj.skuId) {
+        cartStore.addCart({
+            id: goods.value.id,
+            name: goods.value.name,
+            picture: goods.value.mainPictures[0],
+            price: goods.value.price,
+            count: count.value,
+            skuId: SkuObj.skuId,
+            attrsText: SkuObj.specsText,
+            selected: true
+        })
+    } else {
+        ElMessage.warning('请选择规则')
+    }
+}
 </script>
 
 <template>
@@ -36,7 +67,7 @@ onMounted(() => getGoods())
                     <div class="goods-info">
                         <div class="media">
                             <!-- 图片预览区 -->
-                            <imageView></imageView>
+                            <imageView :imageList="goods.mainPictures"></imageView>
                             <!-- 统计数量 -->
                             <ul class="goods-sales">
                                 <li>
@@ -85,12 +116,12 @@ onMounted(() => getGoods())
                                 </dl>
                             </div>
                             <!-- sku组件 -->
-
+                            <XtxSku :goods="goods" @change="skuChange"></XtxSku>
                             <!-- 数据组件 -->
-
+                            <el-input-number v-model="count" :min="1" :max="10" @change="countChange" />
                             <!-- 按钮组件 -->
                             <div>
-                                <el-button size="large" class="btn">
+                                <el-button size="large" class="btn" @click="addCart">
                                     加入购物车
                                 </el-button>
                             </div>
@@ -128,7 +159,7 @@ onMounted(() => getGoods())
             </div>
         </div>
     </div>
-</template>
+</template>1
 
 
 <style scoped lang='scss'>
