@@ -1,9 +1,7 @@
 <script setup>
-
-import { useCategoryStore } from "@/stores/cartStore"
+import { onMounted } from 'vue'
+import { useCategoryStore } from '@/stores/cartStore'
 const cartStore = useCategoryStore()
-
-
 </script>
 
 <template>

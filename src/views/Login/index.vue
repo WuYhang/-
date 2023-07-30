@@ -1,11 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from "@/stores/user"
+import { useCategoryStore } from '@/stores/cartStore'
 import 'element-plus/theme-chalk/el-message.css'
 
 const useStore = useUserStore()
+// 登录时重新调用购物车列表数据
+//const userCartStore = useCategoryStore()
 // 表单数据对象
 const userInfo = ref({
     account: 'xiaotuxian001',
@@ -50,6 +53,8 @@ const doLogin = () => {
             ElMessage({ type: 'success', message: '登录成功' })
             // 2. 跳转首页
             router.replace({ path: '/' })
+            // 登录时重新调用购物车列表数据
+            // userCartStore.updateNewList()
         }
     })
 }
